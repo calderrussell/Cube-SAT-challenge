@@ -27,7 +27,7 @@ from picamera2 import Picamera2
 #VARIABLES
 THRESHOLD = 0      #Any desired value from the accelerometer
 REPO_PATH = ""     #Your github repo path: ex. /home/pi/FlatSatChallenge
-FOLDER_PATH = ""   #Your image folder path in your GitHub repo: ex. /Images
+FOLDER_PATH = "/images"   #Your image folder path in your GitHub repo: ex. /Images
 
 #imu and camera initialization
 i2c = board.I2C()
@@ -67,11 +67,9 @@ def img_gen(name):
     return imgname
 
 
-def take_photo():
-    """
-    This function is NOT complete. Takes a photo when the FlatSat is shaken.
-    Replace psuedocode with your own code.
-    """
+""" def take_photo():
+    # This function is NOT complete. Takes a photo when the FlatSat is shaken.
+    # Replace psuedocode with your own code.
     while True:
         accelx, accely, accelz = accel_gyro.acceleration
 
@@ -81,7 +79,45 @@ def take_photo():
             #TAKE PHOTO
             #PUSH PHOTO TO GITHUB
         
-        #PAUSE
+        #PAUSE 
+"""
+
+def take_photo():
+    """
+    Takes a photo when the FlatSat is shaken. Monitors accelerometer data and checks if it
+    exceeds the threshold. If exceeded, it triggers the camera to take a photo, saves it,
+    and pushes the photo to GitHub.
+    """
+    name = "Cambridge Space Force"  # Replace with your actual name (e.g., "MasonM")
+    print("Monitoring accelerometer for shakes...")
+    
+    while True:
+        # Get accelerometer readings
+        accelx, accely, accelz = accel_gyro.acceleration
+        
+        # Calculate total acceleration (magnitude of the vector)
+        total_accel = (accelx**2 + accely**2 + accelz**2)**0.5
+        
+        # Check if the total acceleration exceeds the threshold
+        if total_accel > THRESHOLD:
+            print(f"Shake detected! Acceleration: {total_accel:.2f}")
+            
+            # Pause to avoid repeated triggers
+            time.sleep(0.5)
+            
+            # Generate image name
+            img_name = img_gen(name)
+            print(f"Saving photo as: {img_name}")
+            
+            # Take a photo
+            picam2.start_and_capture_file(img_name)
+            print(f"Photo saved: {img_name}")
+            
+            # Push the photo to GitHub
+            git_push()
+            
+            # Additional pause to ensure debounce
+            time.sleep(1)        
 
 
 def main():
