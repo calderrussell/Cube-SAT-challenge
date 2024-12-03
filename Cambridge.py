@@ -1,6 +1,7 @@
 print('Hello from Cambridge Space Force!')
 
 #The starter code that Cube Sat people supplied
+
 """
 The Python code you will write for this module should read
 acceleration data from the IMU. When a reading comes in that surpasses
@@ -13,8 +14,8 @@ The provided functions are only for reference, you do not need to use them.
 You will need to complete the take_photo() function and configure the VARIABLES section
 """
 
-#AUTHOR: 
-#DATE:
+#AUTHOR: CSF
+#DATE: 2024-12-3
 
 #import libraries
 import time
