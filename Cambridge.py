@@ -26,9 +26,9 @@ from git import Repo
 from picamera2 import Picamera2
 
 #VARIABLES
-THRESHOLD = 0      #Any desired value from the accelerometer
-REPO_PATH = ""     #Your github repo path: ex. /home/pi/FlatSatChallenge
-FOLDER_PATH = "/images"   #Your image folder path in your GitHub repo: ex. /Images
+THRESHOLD = 20      #Any desired value from the accelerometer
+REPO_PATH = "/home/csf/Cube-SAT-challenge"     #Your github repo path: ex. /home/pi/FlatSatChallenge
+FOLDER_PATH = "Images"   #Your image folder path in your GitHub repo: ex. /Images
 
 #imu and camera initialization
 i2c = board.I2C()
@@ -106,7 +106,7 @@ def take_photo():
             print(f"Shake detected! Acceleration: {total_accel:.2f}")
             
             # Pause to avoid repeated triggers
-            time.sleep(0.5)
+            time.sleep(1)
             
             # Generate image name
             img_name = img_gen(name)
@@ -116,7 +116,7 @@ def take_photo():
             print(f"Photo saved: {img_name}")
             
             # Push the photo to GitHub
-            git_push()
+            #git_push()
             
             # Additional pause to ensure debounce
             time.sleep(1)        
