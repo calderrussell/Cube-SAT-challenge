@@ -87,6 +87,8 @@ def take_photo():
     Takes a photo when the FlatSat is shaken. Monitors accelerometer data and checks if it
     exceeds the threshold. If exceeded, it triggers the camera to take a photo, saves it,
     and pushes the photo to GitHub.
+    Below is the code that calder and google ended up creating, there are a lot of things that 
+    I am not confident actually work but I think it might.
     """
     name = "Cambridge Space Force"  # Replace with your actual name (e.g., "MasonM")
     print("Monitoring accelerometer for shakes...")
@@ -107,7 +109,6 @@ def take_photo():
             
             # Generate image name
             img_name = img_gen(name)
-            print(f"Saving photo as: {img_name}")
             
             # Take a photo
             picam2.start_and_capture_file(img_name)
