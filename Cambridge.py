@@ -1,4 +1,4 @@
-print('hello from cambridge')
+print('Hello from Cambridge Space Force!')
 
 #The starter code that Cube Sat people supplied
 """
