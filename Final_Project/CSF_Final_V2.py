@@ -7,7 +7,6 @@
 import cv2 as cv
 import os
 import numpy as np
-import matplotlib.pyplot as plt
 from git import Repo
 import time
 from picamera2 import Picamera2
@@ -112,6 +111,9 @@ def createMask(img, hsv, lowerBound, upperBound):
     
     #create masked image
     masked_img = cv.bitwise_and(img, img, mask=mask)
+
+    mask_path = img_gen("Mask")
+    cv.imwrite(mask_path, masked_img)
     
     print("Mask created")
     
@@ -140,11 +142,9 @@ def analyzeMask(mask):
 # In[9]:
 
 
-def showImages(imgRGB, masked_img):
+def showImages(img, masked_img):
     #show original image
-    plt.figure()
-    plt.imshow(imgRGB)
-    plt.show()
+    cv.imshow("original", img)
 
     #show masked image
     cv.imshow("masked_img", masked_img)
@@ -162,15 +162,15 @@ def main():
     image, RGB_image, HSV_image = getImageRGBAndHSV(img_name)
     
     #create mask and mask combined with image 
-    lowerBound = np.array([40,30,40])
-    upperBound = np.array([70,255,255])
+    lowerBound = np.array([6,80,60])
+    upperBound = np.array([14,255,255])
     mask, masked_img = createMask(image, HSV_image, lowerBound, upperBound)
     
     #get information on the affected area
     analyzeMask(mask)
     
     # display images
-    showImages(RGB_image, masked_img)
+    # showImages(image, masked_img)
 
 
 # In[ ]:
